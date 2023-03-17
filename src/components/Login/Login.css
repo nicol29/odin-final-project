@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 15px;
 }
 
 .login-container {
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 0px 30px 0
+  padding: 10px 0px 10px 0
 }
 
 .login-container form {
@@ -34,7 +34,7 @@
   height: 25px;
   border-radius: 2px;
   color: white;
-  margin-top: .8rem;
+  margin: 12px 0 20px 0;
   transition: 300ms;
 }
 
@@ -48,7 +48,7 @@
 
 .login-container h1 {
   font-size: 2.25rem;
-  margin: 20px 0px 30px 0px
+  margin: 20px 0px 20px 0px
 }
 
 
@@ -66,4 +66,12 @@
   margin: 0;
   font-size: 13px;
   margin-right: auto;
+}
+
+.to-see {
+  font-size: 1.1rem;
+  width: 80%;
+  text-align: center;
+  color: #787878;
+  font-weight: 600;
 }
