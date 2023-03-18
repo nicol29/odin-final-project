@@ -1,7 +1,9 @@
+import Menu from "../Menu/Menu";
+
 function Home () {
   return (
     <div>
-      Hi
+      <Menu />
     </div>
   )
 }

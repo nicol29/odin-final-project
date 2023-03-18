@@ -1,11 +1,12 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../config/firebase-config';
-import { useContext, useEffect } from 'react';
+import { db, auth } from '../../config/firebase-config';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Link } from 'react-router-dom';
 import schema from '../../schema/validation'
 import UserContext from '../../contexts/UserContext';
+import { doc, setDoc } from "firebase/firestore";
 
 
 function SignUp () {
@@ -22,6 +23,12 @@ function SignUp () {
         data.email, 
         data.password
       );
+      if(user){
+        await setDoc(doc(db, "users", user.user.uid), {
+          fullName: data.fullName,
+          userName: data.userName
+        });
+      }
     } catch (error) {
       console.log(error);
     }

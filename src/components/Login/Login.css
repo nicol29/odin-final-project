@@ -9,7 +9,7 @@
 
 .login-container {
   background-color: white;
-  border: 1px solid #d7d7d7;;
+  border: 1px solid #d7d7d7;
   min-width: 300px;
   display: flex;
   flex-direction: column;

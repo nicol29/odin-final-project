@@ -1,0 +1,22 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  border-right: 1px solid #cccccc;
+  max-width: 200px;
+  height: 100vh;
+}
+
+.menu div {
+  display: flex;
+}
+
+.menu p {
+  margin: auto 0 auto 20px;
+  font-size: 1.1rem;
+}
+
+.menu div:hover {
+  cursor: pointer;
+}
