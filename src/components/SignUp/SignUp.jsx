@@ -1,12 +1,16 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebase-config';
-import { useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
+import { Link } from 'react-router-dom';
 import schema from '../../schema/validation'
+import UserContext from '../../contexts/UserContext';
 
 
 function SignUp () {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -18,12 +22,14 @@ function SignUp () {
         data.email, 
         data.password
       );
-      console.log(user);
-      console.log(auth);
     } catch (error) {
-      
+      console.log(error);
     }
   }
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUserInfo(currentUser);
+  });
 
   return (
     <div className='centre-login'>
@@ -70,7 +76,7 @@ function SignUp () {
         </form>
       </div>
       <div className="login-container">
-        <p>Have an account? <a href='#'>Log in</a></p>
+        <p>Have an account? {<Link to="/" style={{color: '#4596ff', textDecoration: 'none'}}>Log in</Link>}</p>
       </div>
     </div>
   )
