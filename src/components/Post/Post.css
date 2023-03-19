@@ -1,0 +1,43 @@
+.post-container .profile-picture {
+  width: 40px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 100%;
+  align-self: center;
+}
+
+.post-profile-info {
+  display: flex;
+  gap: 10px
+}
+
+.post-picture {
+  width: 100%;
+  max-height: 600px;
+  object-fit: cover;
+}
+
+.post-container {
+  max-width: 500px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.post-container input {
+  border: none;
+  background-color: #f2f2f2;
+  margin-bottom: 15px;
+  height: 20px;
+  outline-style: none;
+}
+
+.interactables {
+  display: flex;
+}
+
+.interactables :last-child {
+  margin-left: auto;
+}
+
+.interactables :first-child {
+  margin-right: 5px;
+}

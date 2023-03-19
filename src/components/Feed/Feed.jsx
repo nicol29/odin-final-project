@@ -1,7 +1,9 @@
+import Post from "../Post/Post";
+
 function Feed () {
   return (
-    <div>
-      
+    <div className="feed-container">
+      <Post />
     </div>
   )
 }
