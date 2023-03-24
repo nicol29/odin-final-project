@@ -1,0 +1,37 @@
+.profile-access {
+  display: flex;
+}
+
+.profile-access img {
+  width: 50px;
+  border-radius: 100%;
+  align-self: center;
+  margin-right: 20px;
+}
+
+.profile-access div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+}
+
+.profile-access p {
+  margin: 0;
+}
+
+.profile-access p:first-of-type {
+  font-weight: bold;
+}
+
+.profile-access p:first-of-type:hover {
+  cursor: pointer;
+}
+
+.profile-access p:last-of-type {
+  color: #7b7b7b;
+}
+
+.profile-access-container {
+  padding-top: 20px;
+}

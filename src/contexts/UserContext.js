@@ -3,10 +3,10 @@ import { createContext, useState } from "react";
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [userInfo, setUserInfo] = useState();
+  const [loggedInUser, setLoggedInUser] = useState();
 
   return (
-    <UserContext.Provider value={[userInfo, setUserInfo]}>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       {children}
     </UserContext.Provider>
   )

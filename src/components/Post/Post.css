@@ -8,7 +8,8 @@
 
 .post-profile-info {
   display: flex;
-  gap: 10px
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .post-picture {
@@ -18,7 +19,7 @@
 }
 
 .post-container {
-  max-width: 500px;
+  width: 500px;
   border-bottom: 1px solid #cccccc;
 }
 
@@ -39,5 +40,5 @@
 }
 
 .interactables :first-child {
-  margin-right: 5px;
+  margin-right: 10px;
 }
