@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { UserProvider } from './contexts/UserContext';
+import { LogInProvider } from './contexts/LogInContext';
+import { UserDataProvider } from './contexts/UserDataContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </UserProvider>
+    <UserDataProvider>
+      <LogInProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LogInProvider>
+    </UserDataProvider>
   </React.StrictMode>
 );

@@ -3,8 +3,6 @@ import Icon from '@mdi/react';
 import "./Menu.css"
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase-config';
-import { db } from '../../config/firebase-config';
-import { collection, doc, getDoc } from "firebase/firestore"; 
 
 function Menu () {
   const logOut = async () => {
@@ -15,14 +13,9 @@ function Menu () {
     }
   }
 
-  const getUsersCol = async () => {
-    const users = await collection(db, 'users');
-    console.log(users)
-  }
-
   return (
     <div className='menu'>
-      <h1 onClick={getUsersCol}>InstaPic</h1>
+      <h1>InstaPic</h1>
       <div>
         <Icon path={mdiHome} size={1.25} />
         <p>Home</p>

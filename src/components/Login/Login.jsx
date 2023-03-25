@@ -3,10 +3,10 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../config/firebase-config';
-import UserContext from '../../contexts/UserContext';
+import LogInContext from '../../contexts/LogInContext';
 
 function Login () {
-  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [loggedInUser, setLoggedInUser] = useContext(LogInContext);
   const [logInEmail, setLogInEmail] = useState('');
   const [logInPass, setLogInPass] = useState('');
 
@@ -27,7 +27,7 @@ function Login () {
   }
 
   onAuthStateChanged(auth, (currentUser) => {
-    setUserInfo(currentUser);
+    setLoggedInUser(currentUser);
   });
 
   return (

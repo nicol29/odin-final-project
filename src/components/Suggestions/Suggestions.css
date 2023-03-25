@@ -20,15 +20,17 @@
   margin: 0;
 }
 
-.profile-access p:first-of-type {
+.profile-access a {
   font-weight: bold;
+  text-decoration: none;
+  color: black;
 }
 
-.profile-access p:first-of-type:hover {
+.profile-access a:hover {
   cursor: pointer;
 }
 
-.profile-access p:last-of-type {
+.profile-access p {
   color: #7b7b7b;
 }
 

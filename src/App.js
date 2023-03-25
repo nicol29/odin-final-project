@@ -5,16 +5,20 @@ import SignUp from './components/SignUp/SignUp';
 import { Route, Routes } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import { useContext } from 'react';
-import UserContext from './contexts/UserContext';
+import LogInContext from './contexts/LogInContext';
+import UserDataContext from './contexts/UserDataContext';
+import Profile from './components/Profile/Profile';
 
 function App() {
-  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [loggedInUser, setLoggedInUser] = useContext(LogInContext);
+  const [userData, setUserData] = useContext(UserDataContext);
 
   return (
     <div className="App">
       <Routes>
-        <Route index element={userInfo?.accessToken ? <Home /> : <Login/>}/>
-        <Route path="/register" element={userInfo?.accessToken ? <Navigate to="/" /> : <SignUp/>}/>
+        <Route index element={loggedInUser?.accessToken ? <Home /> : <Login/>}/>
+        <Route path="/register" element={loggedInUser?.accessToken ? <Navigate to="/" /> : <SignUp/>}/>
+        <Route path={`/${userData?.userName}`} element={<Profile />}/>
       </Routes>
     </div>
   );

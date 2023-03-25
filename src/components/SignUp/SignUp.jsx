@@ -5,12 +5,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Link } from 'react-router-dom';
 import schema from '../../schema/validation'
-import UserContext from '../../contexts/UserContext';
+import LogInContext from '../../contexts/LogInContext';
 import { doc, setDoc } from "firebase/firestore";
 
 
 function SignUp () {
-  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [loggedInUser, setLoggedInUser] = useContext(LogInContext);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -35,7 +35,7 @@ function SignUp () {
   }
 
   onAuthStateChanged(auth, (currentUser) => {
-    setUserInfo(currentUser);
+    setLoggedInUser(currentUser);
   });
 
   return (
