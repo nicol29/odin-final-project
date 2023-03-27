@@ -38,3 +38,84 @@ body {
   object-fit: cover;
   border-radius: 5px 0px 0px 5px;
 }
+
+.comments-side img {
+  width: 35px;
+  border-radius: 100%;
+  align-self: center;
+}
+
+.user-posts-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.user-posts-info p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.comments-container,
+.add-comment-section,
+.post-actions-container {
+  padding: 10px
+}
+
+.comments-container div {
+  display: flex;
+  gap: 12px;
+}
+
+.comments-container div img {
+  margin-top: 12px;
+  align-self: flex-start;
+}
+
+.post-actions-container {
+  border-top: 1px solid #cccccc;
+}
+
+.post-actions-container div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-actions-container p:last-of-type {
+  margin: 0;
+}
+
+.add-comment-section {
+  border-top: 1px solid #cccccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-comment-section input {
+  border: none;
+  outline: none;
+  font-size: .9rem;
+}
+
+.add-comment-section button {
+  border: none;
+  background-color: white;
+  transition: 200ms;
+  font-weight: bold;
+  font-size: .9rem;
+}
+
+.add-comment-section button:hover {
+  cursor: pointer;
+  color: #4596ff;
+}
+
+.comments-container {
+  overflow: auto;
+  overflow-y: scroll;
+  height: calc(100% - 235px);
+}
+
