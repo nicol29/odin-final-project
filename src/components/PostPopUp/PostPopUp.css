@@ -23,6 +23,15 @@ body {
   max-height: 80vh;
 }
 
+.post-modal-container {
+  width: 80%;
+  max-width: 1000px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  max-height: 80vh;
+}
+
 .image-side {
   width: 100%;
 }

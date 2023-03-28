@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db, storage } from "../../config/firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
 import uniqid from "uniqid";
-
+import Modal from "../Modal/Modal";
 
 const retrievePhotoUrl = async (query, setState) => {
   const snap = await getDocs(query);
@@ -53,42 +53,37 @@ function PostPopUp ({ modalInfo, setModalInfo, usersPosts}) {
   }, []);
 
   return (
-    <div className="post-modal-bg" onClick={(e) => toggleModal(e)}>
-      <div className="close-modal">
-        ✕
-      </div>
-      <div className="post-modal-container">
-        <div className="image-side">
+    <Modal setModalState={setModalInfo} modalStyle="post-modal-container">
+      <div className="image-side">
           <img src={selectedPost?.image} alt="Post from user"/>
+      </div>
+      <div className="comments-side">
+        <div className="user-posts-info">
+          <img src={userData.profilePicture} alt="user profile"/>
+          <p>{userData.userName}</p>
         </div>
-        <div className="comments-side">
-          <div className="user-posts-info">
-            <img src={userData.profilePicture} alt="user profile"/>
-            <p>{userData.userName}</p>
-          </div>
-          <div className="comments-container">
-            {postComments.map(comment => (
-              <div key={uniqid()}>
-                <img src={comment.profilePicture} alt="user profile"/>
-                <p><span style={{fontWeight: "bold"}}>{comment.userName}</span> {comment.text}</p>
-              </div>
-            ))}
-          </div>
-          <div className="post-actions-container">
-            <div>
-              <Icon path={mdiHeartOutline} size={1.25}/>
-              <Icon path={mdiBookmarkOutline} size={1.25}/>
+        <div className="comments-container">
+          {postComments.map(comment => (
+            <div key={uniqid()}>
+              <img src={comment.profilePicture} alt="user profile"/>
+              <p><span style={{fontWeight: "bold"}}>{comment.userName}</span> {comment.text}</p>
             </div>
-            <p>Liked by</p>
-            <p>2 hours ago</p>
+          ))}
+        </div>
+        <div className="post-actions-container">
+          <div>
+            <Icon path={mdiHeartOutline} size={1.25}/>
+            <Icon path={mdiBookmarkOutline} size={1.25}/>
           </div>
-          <div className="add-comment-section">
-            <input placeholder="Add a comment..."></input>
-            <button>Post</button>
-          </div>
+          <p>Liked by</p>
+          <p>2 hours ago</p>
+        </div>
+        <div className="add-comment-section">
+          <input placeholder="Add a comment..."></input>
+          <button>Post</button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
 
