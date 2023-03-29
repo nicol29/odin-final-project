@@ -5,13 +5,11 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase-config';
 import { useState } from 'react';
 import CreatePost from '../CreatePost/CreatePost';
+import Modal from '../Modal/Modal';
+
 
 function Menu () {
-  const [createPost, setCreatePost] = useState({
-    clicked: false,
-    image: "",
-    caption: ""
-  });
+  const [createPost, setCreatePost] = useState({});
 
   const logOut = async () => {
     try {
@@ -54,7 +52,7 @@ function Menu () {
           <p>Settings</p>
         </div>
       </div>
-      {createPost.clicked && <CreatePost />}
+      {createPost.clicked && <CreatePost setDisableModal={setCreatePost}/>}
     </>
   )
 }
