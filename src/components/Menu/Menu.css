@@ -1,27 +1,72 @@
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 20px;
+  gap: 10px;
+  padding: 0px 20px 0px 20px;
   border-right: 1px solid #cccccc;
   width: 250px;
   height: 100vh;
   position: fixed;
+  z-index: 5;
+  background-color: #f2f2f2;
 }
 
 .menu div {
-  display: flex;
+  display: inline-flex;
+  height: 50px;
+  align-items: center;
+  border-radius: 30px;
+  padding-left: 5px;
 }
 
 .menu p {
-  margin: auto 0 auto 15px;
+  margin-left: 12px;
   font-size: 1.1rem;
 }
 
 .menu div:hover {
   cursor: pointer;
+  background-color: #e2e2e2;
+}
+
+.menu div:last-of-type {
+  margin-bottom: 10px;
 }
 
 .logout-button {
   margin-top: auto;
+}
+
+.expand-container {
+  position: fixed;
+  z-index: 2;
+  width: 400px;
+  height: 100vh;
+  left: 291px;
+  border-right: 1px solid #cccccc;
+  background-color: #f2f2f2;
+  /* border-top-right-radius: 20px; */
+  transform: translateX(-100%);
+  transition: 700ms;
+}
+
+.expand-effect {
+  transform: translateX(0%);
+} 
+
+.expand-contents {
+  opacity: 0;
+  transition: 1s;
+}
+
+.expand-effect-children {
+  opacity: 1;
+}
+
+.menu h1 {
+  max-width: fit-content;
+}
+
+.menu h1:hover {
+  cursor: pointer;
 }
