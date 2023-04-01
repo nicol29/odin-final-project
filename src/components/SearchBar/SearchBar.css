@@ -1,0 +1,36 @@
+.search-heading {
+  padding: 0px 20px 20px 20px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.search-heading input {
+  height: 35px;
+  width: 350px;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  outline: none;
+}
+
+.search-heading h2 {
+  margin-bottom: 30px;
+}
+
+.search-matches {
+  padding-top: 8px;
+  overflow-x: scroll;
+  height: calc(100vh - 145px);
+}
+
+.search-matches div {
+  height: 65px;
+}
+
+.search-matches div:hover {
+  height: 65px;
+  background-color: #e4e4e4;
+  cursor: pointer;
+}
+
+.search-matches div img {
+  margin-left: 20px;
+}

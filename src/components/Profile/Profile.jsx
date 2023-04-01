@@ -1,12 +1,12 @@
-import "./Profile.css";
 import Menu from "../Menu/Menu";
 import PostPopUp from "../PostPopUp/PostPopUp";
 import UserDataContext from "../../contexts/UserDataContext";
 import { useContext, useEffect, useState } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, storage } from "../../config/firebase-config";
-import { ref, getDownloadURL } from "firebase/storage";
+import { db } from "../../config/firebase-config";
 import uniqid from "uniqid";
+import retrieveImagesAndDocIds from "../../helpers/retrieveImagesAndDocIds";
+import "./Profile.css";
 
 
 function Profile () {
@@ -38,24 +38,8 @@ function Profile () {
   }
 
   useEffect(() => {
-    (async () => {
-      const usersPostQuery = query(collection(db, "posts"), where("uid", "==", userData.uid));
-      const snap = await getDocs(usersPostQuery);
-      const posts = snap.docs.map(post => {
-        return {documentId: post.id, ...post.data()};
-      });
-
-      const pictures = posts.map(async (post) => {
-        const postPicsRef = ref(storage, post.image);
-        const downloadedPicture = await getDownloadURL(postPicsRef);
-  
-        return { ...post, image: downloadedPicture}
-      })
-
-      Promise.all([...pictures]).then((values) => {
-        setUsersPosts([...values])
-      });
-    })();
+    const usersPostQuery = query(collection(db, "posts"), where("uid", "==", userData.uid));
+    retrieveImagesAndDocIds(usersPostQuery, setUsersPosts, "post");
 
     getFollowers();
     getFollowings();
