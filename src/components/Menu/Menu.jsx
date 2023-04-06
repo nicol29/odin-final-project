@@ -72,8 +72,9 @@ function Menu () {
       </div>
       {createPost.clicked && <CreatePost setDisableModal={setCreatePost}/>}
       <div 
-          ref={expandingMenuRef} 
-          className={menuOptions.active ? "expand-container expand-effect" : "expand-container"}>
+        ref={expandingMenuRef} 
+        className={menuOptions.active ? "expand-container expand-effect" : "expand-container"}
+      >
         <div className={menuOptions.active ? "expand-contents expand-effect-children" : "expand-contents"}>
           {menuOptions.display}
         </div>

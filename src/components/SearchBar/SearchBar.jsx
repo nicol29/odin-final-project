@@ -1,5 +1,5 @@
 import { db } from "../../config/firebase-config";
-import { collection, where, query } from "firebase/firestore";
+import { collection, where, query, limit } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import retrieveImagesAndDocIds from "../../helpers/retrieveImagesAndDocIds";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ function SearchBar () {
   const [searchMatches, setSearchMatches] = useState([]);
 
   const getSearchedUsers = async () => {
-    const q = query(collection(db, "users"), where("searchTerms", "array-contains", searchTerm.toLocaleLowerCase()));
+    const q = query(collection(db, "users"), where("searchTerms", "array-contains", searchTerm.toLocaleLowerCase()), limit(20));
     retrieveImagesAndDocIds(q, setSearchMatches, "profile");
   }
 

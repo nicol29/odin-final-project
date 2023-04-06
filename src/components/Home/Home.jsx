@@ -1,5 +1,5 @@
 import Menu from "../Menu/Menu";
-import Post from "../Post/Post";
+import Feed from "../Feed/Feed";
 import Suggestions from "../Suggestions/Suggestions";
 import { useEffect, useContext } from "react";
 import "./Home.css";
@@ -14,11 +14,6 @@ import LogInContext from "../../contexts/LogInContext";
 function Home () {
   const [loggedInUser, setLoggedInUser] = useContext(LogInContext);
   const [userData, setUserData] = useContext(UserDataContext);
-
-  const retrieveFollowingsPosts = async () => {
-    // const user = await getDoc(doc(db, "users", "JoIAINZ58Ub4yLHs7S2za2B9ccK2"));
-    // console.log(user)
-  };
 
   useEffect(() => {
     (async () => {
@@ -36,13 +31,7 @@ function Home () {
     <>
       <Menu />
       <div className="content-container">
-        <div className="feed-container">
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-        </div>
+        <Feed />
         <div className="suggestions-container">
           <Suggestions />
         </div>
