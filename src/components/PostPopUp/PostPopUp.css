@@ -63,7 +63,7 @@ body {
   border-bottom: 1px solid #cccccc;
 }
 
-.user-posts-info p {
+.user-posts-info p:first-of-type {
   font-weight: bold;
   margin: 0;
 }
@@ -91,10 +91,6 @@ body {
 .post-actions-container div {
   display: flex;
   justify-content: space-between;
-}
-
-.post-actions-container p:last-of-type {
-  margin: 0;
 }
 
 .add-comment-section {
@@ -129,3 +125,6 @@ body {
   height: calc(100% - 235px);
 }
 
+.time-difference {
+  color: #7d7d7d;
+}

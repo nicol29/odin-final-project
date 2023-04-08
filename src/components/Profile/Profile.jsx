@@ -48,7 +48,7 @@ function Profile () {
     (async () => {
       const q = query(collection(db, "users"), where("userName", "==", profileToRender.userName));
       const snap = await getDocs(q);
-
+      
       setProfileToRender({...profileToRender, uid: snap.docs[0].id});
     })()
   }, []);

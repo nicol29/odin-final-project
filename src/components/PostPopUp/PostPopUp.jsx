@@ -7,6 +7,7 @@ import { db } from "../../config/firebase-config";
 import uniqid from "uniqid";
 import Modal from "../Modal/Modal";
 import retrieveImagesAndDocIds from "../../helpers/retrieveImagesAndDocIds";
+import getElapsedPostedTime from "../../helpers/getElapsedPostedTime";
 
 
 function PostPopUp ({ modalInfo, setModalInfo, usersPosts, profileData}) {
@@ -33,6 +34,7 @@ function PostPopUp ({ modalInfo, setModalInfo, usersPosts, profileData}) {
         <div className="user-posts-info">
           <img src={profileData.profilePicture} alt="user profile"/>
           <p>{profileData.userName}</p>
+          <p className="time-difference">{selectedPost?.date && getElapsedPostedTime(selectedPost.date)}</p>
         </div>
         <div className="comments-container">
           {selectedPost.caption !== "" &&
@@ -54,7 +56,6 @@ function PostPopUp ({ modalInfo, setModalInfo, usersPosts, profileData}) {
             <Icon path={mdiBookmarkOutline} size={1.25}/>
           </div>
           <p>Liked by</p>
-          <p>2 hours ago</p>
         </div>
         <div className="add-comment-section">
           <input placeholder="Add a comment..."></input>
