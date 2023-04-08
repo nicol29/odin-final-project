@@ -1,45 +1,17 @@
 import { mdiHeartOutline, mdiHeart, mdiBookmarkOutline } from "@mdi/js";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@mdi/react";
-import UserDataContext from "../../contexts/UserDataContext";
 import "./PostPopUp.css";
-import { collection, getDocs } from "firebase/firestore";
-import { db, storage } from "../../config/firebase-config";
-import { getDownloadURL, ref } from "firebase/storage";
+import { collection } from "firebase/firestore";
+import { db } from "../../config/firebase-config";
 import uniqid from "uniqid";
 import Modal from "../Modal/Modal";
+import retrieveImagesAndDocIds from "../../helpers/retrieveImagesAndDocIds";
 
-const retrievePhotoUrl = async (query, setState) => {
-  const snap = await getDocs(query);
-  const items = snap.docs.map(item => {
-  return {...item.data()};
-  })
 
-  const pictures = items.map(async (item) => {
-    const postPicsRef = ref(storage, item.profilePicture);
-    const downloadedPicture = await getDownloadURL(postPicsRef);
-
-    return { ...item, profilePicture: downloadedPicture}
-  })
-
-  Promise.all([...pictures]).then((values) => {
-    setState([...values])
-  });
-}
-
-function PostPopUp ({ modalInfo, setModalInfo, usersPosts}) {
-  const [userData, setUserData] = useContext(UserDataContext);
-
+function PostPopUp ({ modalInfo, setModalInfo, usersPosts, profileData}) {
   const [selectedPost, setSelectedPosts] = useState({});
   const [postComments, setPostComments] = useState([]);
-
-  const toggleModal = (e) => {
-    const target = e.target.className;
-
-    if (target === "post-modal-bg" || target === "close-modal") {
-      setModalInfo({});
-    }
-  }
 
   useEffect(() => {
     usersPosts.forEach(post => {
@@ -49,7 +21,7 @@ function PostPopUp ({ modalInfo, setModalInfo, usersPosts}) {
     })
 
     const usersPostQuery = collection(db, "posts", modalInfo.postId, "comments");
-    retrievePhotoUrl(usersPostQuery, setPostComments);
+    retrieveImagesAndDocIds(usersPostQuery, setPostComments, "profile");
   }, []);
 
   return (
@@ -59,10 +31,16 @@ function PostPopUp ({ modalInfo, setModalInfo, usersPosts}) {
       </div>
       <div className="comments-side">
         <div className="user-posts-info">
-          <img src={userData.profilePicture} alt="user profile"/>
-          <p>{userData.userName}</p>
+          <img src={profileData.profilePicture} alt="user profile"/>
+          <p>{profileData.userName}</p>
         </div>
         <div className="comments-container">
+          {selectedPost.caption !== "" &&
+            <div>
+              <img src={profileData.profilePicture} alt="user profile"/>
+              <p><span style={{fontWeight: "bold"}}>{profileData.userName}</span> {selectedPost.caption}</p>
+            </div>
+          }
           {postComments.map(comment => (
             <div key={uniqid()}>
               <img src={comment.profilePicture} alt="user profile"/>

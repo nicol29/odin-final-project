@@ -5,15 +5,18 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { LogInProvider } from './contexts/LogInContext';
 import { UserDataProvider } from './contexts/UserDataContext';
+import { ProfileProvider } from './contexts/ProfileContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UserDataProvider>
       <LogInProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <ProfileProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ProfileProvider>
       </LogInProvider>
     </UserDataProvider>
   </React.StrictMode>

@@ -34,3 +34,42 @@
 .search-matches div img {
   margin-left: 20px;
 }
+
+.search-matches a {
+  text-decoration: none;
+}
+
+.search-profile {
+  display: flex;
+}
+
+.search-profile img {
+  width: 50px;
+  border-radius: 100%;
+  align-self: center;
+  margin-right: 20px;
+}
+
+.search-profile div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+}
+
+.search-profile p {
+  margin: 0;
+}
+
+.search-profile p:first-of-type {
+  font-weight: bold;
+  color: black;
+}
+
+.search-profile p:last-of-type {
+  color: #7b7b7b;
+}
+
+.profile-access-container {
+  padding-top: 20px;
+}

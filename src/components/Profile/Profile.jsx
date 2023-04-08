@@ -1,20 +1,22 @@
 import Menu from "../Menu/Menu";
 import PostPopUp from "../PostPopUp/PostPopUp";
-import UserDataContext from "../../contexts/UserDataContext";
+import ProfileContext from "../../contexts/ProfileContext";
 import { useContext, useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebase-config";
+import { collection, query, where, getDocs, getCountFromServer, getDoc, doc } from "firebase/firestore";
+import { db, storage } from "../../config/firebase-config";
+import { getDownloadURL, ref } from "firebase/storage";
 import uniqid from "uniqid";
 import retrieveImagesAndDocIds from "../../helpers/retrieveImagesAndDocIds";
 import "./Profile.css";
 
 
 function Profile () {
-  const [userData, setUserData] = useContext(UserDataContext);
+  const [profileToRender, setProfileToRender] = useContext(ProfileContext);
 
+  const [profileData, setProfileData] = useState({});
   const [usersPosts, setUsersPosts] = useState([]);
-  const [usersFollowers, setUsersFollowers] = useState([]);
-  const [usersFollowings, setUsersFollowings] = useState([]);
+  const [followerCount, setFollowerCount] = useState();
+  const [followingCount, setFollowingCount] = useState();
   const [modal, setModal] = useState({});
 
   const manageModal = (e) => {
@@ -23,27 +25,44 @@ function Profile () {
     if(specificPost) setModal({...modal, show: true, postId: specificPost})
   }
 
-  const getFollowers = async () => {
-    const snap = await getDocs(collection(db, "users", userData.uid, "followers"));
-    const followers = snap.docs.map(follower => follower.data());
+  const getProfileInformation = async () => {
+    const snap = await getDoc(doc(db, "users", profileToRender.uid));
 
-    setUsersFollowers([...followers]);
+    const profilePicsRef = ref(storage, snap.data().profilePicture);
+    const downloadedPicture = await getDownloadURL(profilePicsRef);
+    
+    setProfileData({...snap.data(), profilePicture: downloadedPicture});
   }
 
-  const getFollowings = async () => {
-    const snap = await getDocs(collection(db, "users", userData.uid, "following"));
-    const followings = snap.docs.map(following => following.data());
+  const getFollowersCount = async () => {
+    const snap = await getCountFromServer(collection(db, "users", profileToRender.uid, "followers"));
+    setFollowerCount(snap.data().count);
+  }
 
-    setUsersFollowings([...followings]);
+  const getFollowingCount = async () => {
+    const snap = await getCountFromServer(collection(db, "users", profileToRender.uid, "following"));
+    setFollowingCount(snap.data().count);
   }
 
   useEffect(() => {
-    const usersPostQuery = query(collection(db, "posts"), where("uid", "==", userData.uid));
-    retrieveImagesAndDocIds(usersPostQuery, setUsersPosts, "post");
+    (async () => {
+      const q = query(collection(db, "users"), where("userName", "==", profileToRender.userName));
+      const snap = await getDocs(q);
 
-    getFollowers();
-    getFollowings();
+      setProfileToRender({...profileToRender, uid: snap.docs[0].id});
+    })()
   }, []);
+
+  useEffect(() => {
+    if(profileToRender.uid) {
+      const usersPostQuery = query(collection(db, "posts"), where("uid", "==", profileToRender.uid));
+
+      getProfileInformation();
+      retrieveImagesAndDocIds(usersPostQuery, setUsersPosts, "post");
+      getFollowersCount();
+      getFollowingCount();
+    }
+  }, [profileToRender]);
 
   return (
     <>
@@ -52,20 +71,20 @@ function Profile () {
         <div className="profile">
           <div className="top-half">
             <div>
-              <img src={userData?.profilePicture} alt="profile" />
+              <img src={profileData?.profilePicture} alt="profile" />
               <div className="profile-info">
                 <div>
-                  <p>{userData?.userName}</p>
+                  <p>{profileData?.userName}</p>
                   <button>Edit Profile</button>
                 </div>
                 <div className="counts">
                   <p>{usersPosts.length} posts</p>
-                  <p>{usersFollowers.length} followers</p>
-                  <p>{usersFollowings.length} following</p>
+                  <p>{followerCount} followers</p>
+                  <p>{followingCount} following</p>
                 </div>
                 <div>
-                  <p className="username-display">{userData?.fullName}</p>
-                  <p>{userData?.bio}</p>
+                  <p className="username-display">{profileData?.fullName}</p>
+                  <p>{profileData?.bio}</p>
                 </div>
               </div>
             </div>
@@ -84,7 +103,13 @@ function Profile () {
           </div>
         </div>
       </div>
-      {modal.show === true && <PostPopUp modalInfo={modal} setModalInfo={setModal} usersPosts={usersPosts}/>}
+      { modal.show === true && 
+        <PostPopUp 
+          modalInfo={modal} 
+          setModalInfo={setModal} 
+          usersPosts={usersPosts}
+          profileData={profileData} />
+      }
     </>
   )
 }

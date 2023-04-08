@@ -12,7 +12,7 @@ const retrieveImagesAndDocIds = async (query, setState, option) => {
     if(option === "profile") {
       const postPicsRef = ref(storage, post.profilePicture);
       const downloadedPicture = await getDownloadURL(postPicsRef);
-      
+
       return { ...post, profilePicture: downloadedPicture}
     } else if (option === "post") {
       const postPicsRef = ref(storage, post.image);

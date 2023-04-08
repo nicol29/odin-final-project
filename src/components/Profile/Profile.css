@@ -74,7 +74,7 @@
 .bottom-half {
   width: 100%;
   max-width: 900px;
-  margin-top: 50px;
+  margin: 50px 0px 50px 0px;
 }
 
 .photo-grid-container {
