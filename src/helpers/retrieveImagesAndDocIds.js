@@ -24,9 +24,6 @@ const retrieveImagesAndDocIds = async (query, setState, option) => {
 
   Promise.all([...pictures]).then((values) => {
     if (option === "post") {
-      console.log(values);
-      let sorted = quickSort(values);
-      console.log(sorted)
       setState([...quickSort(values)]);
     } else {
       setState([...values]);

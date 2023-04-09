@@ -1,9 +1,10 @@
 import Post from "../Post/Post";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { query } from "firebase/firestore";
 import { db, storage } from "../../config/firebase-config";
 import { ref, getDownloadURL } from "firebase/storage";
-import { collection, orderBy, startAfter, limit, getDocs } from "firebase/firestore";
+import { collection, orderBy, startAfter, limit, getDocs, where } from "firebase/firestore";
+import UserDataContext from "../../contexts/UserDataContext";
 import loadingGif from "../../assets/loading-gif.gif";
 import uniqid from "uniqid";
 
@@ -13,11 +14,20 @@ const retrievePostInformation = async (query, setPostState, previousState) => {
 
   const infoReadyPosts = snap.docs.map(async post => {
     const fileLocation = post._document.data.value.mapValue.fields.image.stringValue;
+    const ppLocation = post._document.data.value.mapValue.fields.profilePicture.stringValue;
 
     const postPicsRef = ref(storage, fileLocation);
     const downloadedPicture = await getDownloadURL(postPicsRef);
 
-    return {documentId: post.id, ...post.data(), image: downloadedPicture};
+    const ppRef = ref(storage, ppLocation);
+    const downloadedPp = await getDownloadURL(ppRef);
+
+    return {
+      ...post.data(),
+      documentId: post.id,
+      image: downloadedPicture,
+      profilePicture: downloadedPp
+    };
   });
 
   Promise.all([...infoReadyPosts]).then((values) => {
@@ -28,14 +38,26 @@ const retrievePostInformation = async (query, setPostState, previousState) => {
   });
 }
 
+
 function Feed () {
+  const [userData, setUserData] = useContext(UserDataContext);
+  const [followedAccounts, setFollowedAccounts] = useState([]);
   const [fetchedPosts, setFetchedPosts] = useState({posts: [], lastPost: {}});
 
   useEffect(() => {
-    const first = query(collection(db, "posts"), orderBy("date"), limit(2));
+    if (userData?.uid) {
+      (async () => {
+        const q = await getDocs(collection(db, "users", userData?.uid, "following"));
 
-    retrievePostInformation(first, setFetchedPosts, fetchedPosts);
-  }, []);
+        const followerIds = q.docs.map(post => post.data().uid);
+
+        const first = query(collection(db, "posts"), where('uid', 'in', followerIds), orderBy("date", "desc"), limit(2));
+
+        retrievePostInformation(first, setFetchedPosts, fetchedPosts);
+        setFollowedAccounts([...followerIds]);
+      })()
+    }
+  }, [userData]);
 
   useEffect(() => {
     const checkForPagination = () => {
@@ -43,7 +65,7 @@ function Feed () {
       const scrollPoint = window.scrollY + window.innerHeight + 1;
 
       if (scrollPoint >= totalPageHeight) {
-        const next = query(collection(db, "posts"), orderBy("date"), startAfter(fetchedPosts.lastPost), limit(2));
+        const next = query(collection(db, "posts"), where('uid', 'in', followedAccounts), orderBy("date", "desc"), startAfter(fetchedPosts.lastPost), limit(2));
   
         retrievePostInformation(next, setFetchedPosts, fetchedPosts);
       }
