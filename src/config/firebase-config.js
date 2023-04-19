@@ -5,12 +5,12 @@ import { getFirestore } from "@firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCPuJ9NrNgl5zoOpyqWVbESkpFu3A9fHcY",
-  authDomain: "instapic-966ac.firebaseapp.com",
-  projectId: "instapic-966ac",
-  storageBucket: "instapic-966ac.appspot.com",
-  messagingSenderId: "926796911590",
-  appId: "1:926796911590:web:490f129bd973377b97fc27"
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId
 };
 
 // Initialize Firebase
